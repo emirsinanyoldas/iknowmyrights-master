@@ -1,0 +1,106 @@
+{
+  "Turkish": {
+    "categories": {
+      "disability": {
+        "name": "Engelli Hakları",
+        "questions": [
+          {
+            "question": "Engelli bireylerin eğitim hakkı hangi yasa ile güvence altına alınmıştır?",
+            "options": [
+              "5378 sayılı Engelliler Hakkında Kanun",
+              "4857 sayılı İş Kanunu",
+              "2828 sayılı Sosyal Hizmetler Kanunu",
+              "6331 sayılı İş Sağlığı ve Güvenliği Kanunu"
+            ],
+            "correctAnswer": 0,
+            "explanation": "5378 sayılı Engelliler Hakkında Kanun, engelli bireylerin eğitim hakkını güvence altına alır."
+          }
+        ]
+      },
+      "women": {
+        "name": "Kadın Hakları",
+        "questions": [
+          {
+            "question": "Kadın çalışanların doğum sonrası yarım çalışma hakkı ne kadardır?",
+            "options": [
+              "2 ay",
+              "4 ay",
+              "6 ay",
+              "12 ay"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Kadın çalışanlar doğum sonrası 6 ay süreyle yarım çalışma hakkına sahiptir."
+          }
+        ]
+      },
+      "elderly": {
+        "name": "Yaşlı Hakları",
+        "questions": [
+          {
+            "question": "Yaşlı bireylerin huzurevine kabul edilme yaşı kaçtır?",
+            "options": [
+              "55",
+              "60", 
+              "65",
+              "70"
+            ],
+            "correctAnswer": 1,
+            "explanation": "60 yaş ve üzeri bireyler huzurevine kabul edilebilir."
+          }
+        ]
+      },
+      "children": {
+        "name": "Çocuk Hakları",
+        "questions": [
+          {
+            "question": "Çocuk işçilerin çalıştırılabileceği haftalık azami çalışma süresi nedir?",
+            "options": [
+              "20 saat",
+              "30 saat", 
+              "35 saat",
+              "40 saat"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Çocuk işçiler haftada en fazla 35 saat çalıştırılabilir."
+          }
+        ]
+      },
+      "fundamental": {
+        "name": "Temel Haklar",
+        "questions": [
+          {
+            "question": "Anayasa'ya göre temel hak ve özgürlükler hangi durumlarda sınırlandırılabilir?",
+            "options": [
+              "Hiçbir durumda sınırlandırılamaz",
+              "Sadece savaş durumunda",
+              "Kanunla ve ölçülülük ilkesine uygun olarak",
+              "İdarenin takdirine göre"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Temel hak ve özgürlükler, ancak kanunla ve ölçülülük ilkesine uygun olarak sınırlandırılabilir."
+          }
+        ]
+      }
+    }
+  },
+  "English": {
+    "categories": {
+      "disability": {
+        "name": "Disability Rights",
+        "questions": [
+          {
+            "question": "Which law guarantees the right to education for individuals with disabilities?",
+            "options": [
+              "Law No. 5378 on Disabled People",
+              "Labor Law No. 4857",
+              "Social Services Law No. 2828",
+              "Occupational Health and Safety Law No. 6331"
+            ],
+            "correctAnswer": 0,
+            "explanation": "Law No. 5378 on Disabled People guarantees the right to education for individuals with disabilities."
+          }
+        ]
+      }
+    }
+  }
+}

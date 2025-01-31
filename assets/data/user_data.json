@@ -1,0 +1,54 @@
+{
+  "user": {
+    "id": "1",
+    "name": "Örnek Kullanıcı",
+    "email": "ornek@email.com",
+    "quizStats": {
+      "totalQuestions": 50,
+      "correctAnswers": 35,
+      "wrongAnswers": 15,
+      "accuracyPercentage": 70,
+      "categoryStats": {
+        "disability": {
+          "total": 10,
+          "correct": 7,
+          "accuracy": 70
+        },
+        "women": {
+          "total": 10,
+          "correct": 8,
+          "accuracy": 80
+        },
+        "elderly": {
+          "total": 10,
+          "correct": 6,
+          "accuracy": 60
+        },
+        "children": {
+          "total": 10,
+          "correct": 7,
+          "accuracy": 70
+        },
+        "fundamental": {
+          "total": 10,
+          "correct": 7,
+          "accuracy": 70
+        }
+      },
+      "quizHistory": [
+        {
+          "date": "2024-03-15",
+          "category": "women",
+          "score": 8,
+          "total": 10
+        },
+        {
+          "date": "2024-03-14",
+          "category": "disability",
+          "score": 7,
+          "total": 10
+        }
+      ]
+    }
+  }
+} 
