@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iknowmyrights/theme/app_theme.dart';
 import 'package:iknowmyrights/screens/about_screen.dart';
 import 'package:iknowmyrights/screens/help_screen.dart';
 
@@ -13,6 +12,41 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   bool isDarkMode = false;
   String currentLanguage = 'TR';
+
+  void _showSettingsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Ayarlar'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Karanlık Mod'),
+                Switch(
+                  value: isDarkMode,
+                  onChanged: (value) {
+                    setState(() {
+                      isDarkMode = value;
+                    });
+                    Navigator.pop(context); // Dialog'u kapat
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Kapat'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +122,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 }
               },
             ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            title: const Text('Ayarlar'),
+            onTap: () {
+              Navigator.pop(context); // Drawer'ı kapat
+              _showSettingsDialog(context);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.help),
