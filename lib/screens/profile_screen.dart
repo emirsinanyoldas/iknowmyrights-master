@@ -12,9 +12,11 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
   Map<String, dynamic>? userData;
   File? _profileImage;
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
 
   String _getGravatarUrl(String email) {
     final bytes = utf8.encode(email.trim().toLowerCase());
@@ -26,12 +28,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     _loadUserData();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    _fadeAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   Future<void> _loadUserData() async {
     try {
       final String jsonString =
-          await DefaultAssetBundle.of(context).loadString('assets/data/user_data.json');
+      await DefaultAssetBundle.of(context).loadString('assets/data/user_data.json');
       setState(() {
         userData = json.decode(jsonString)['user'];
       });
@@ -43,12 +57,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    
+
     if (image != null) {
       setState(() {
         _profileImage = File(image.path);
       });
-      // İleride: Firebase'e yükle
     }
   }
 
@@ -61,158 +74,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     final stats = userData!['quizStats'];
-    final categoryStats = stats['categoryStats'];
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profil'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              color: AppTheme.primaryColor.withOpacity(0.1),
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage: _profileImage != null
-                            ? FileImage(_profileImage!)
-                            : NetworkImage(_getGravatarUrl(userData!['email'])) as ImageProvider,
-                      ),
-                      Positioned(
-                        right: 0,
-                        bottom: 0,
-                        child: CircleAvatar(
-                          backgroundColor: AppTheme.primaryColor,
-                          radius: 18,
-                          child: IconButton(
-                            icon: const Icon(Icons.camera_alt, size: 18),
-                            color: Colors.white,
-                            onPressed: _pickImage,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    userData!['name'],
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    userData!['email'],
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Quiz İstatistikleri',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      _buildStatCard(
-                        'Toplam Soru',
-                        stats['totalQuestions'].toString(),
-                        Icons.quiz,
-                      ),
-                      const SizedBox(width: 16),
-                      _buildStatCard(
-                        'Doğruluk',
-                        '%${stats['accuracyPercentage']}',
-                        Icons.check_circle,
-                        color: Colors.green,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  const Text(
-                    'Kategori Bazlı Performans',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  ...categoryStats.entries.map((entry) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: _buildCategoryProgress(
-                      entry.key,
-                      entry.value['accuracy'].toDouble(),
-                    ),
-                  )),
-                  const SizedBox(height: 24),
-                  const Text(
-                    'Son Quiz\'ler',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  ...stats['quizHistory'].map((quiz) => Card(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    child: ListTile(
-                      leading: const Icon(Icons.history),
-                      title: Text(quiz['category']),
-                      subtitle: Text(quiz['date']),
-                      trailing: Text(
-                        '${quiz['score']}/${quiz['total']}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  )),
-                ],
-              ),
-            ),
-          ],
+        title: const Text(
+          'Profil',
+          style: TextStyle(fontFamily: 'RobotoSlab', fontWeight: FontWeight.bold),
         ),
       ),
-    );
-  }
-
-  Widget _buildStatCard(String title, String value, IconData icon, {Color? color}) {
-    return Expanded(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
+      body: FadeTransition(
+        opacity: _fadeAnimation,
+        child: SingleChildScrollView(
           child: Column(
             children: [
-              Icon(icon, color: color ?? AppTheme.primaryColor, size: 32),
-              const SizedBox(height: 8),
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: color ?? AppTheme.primaryColor,
-                ),
-              ),
-              Text(
-                title,
-                style: TextStyle(
-                  color: Colors.grey[600],
+              Container(
+                color: AppTheme.primaryColor.withOpacity(0.1),
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundImage: _profileImage != null
+                              ? FileImage(_profileImage!)
+                              : NetworkImage(_getGravatarUrl(userData!['email'])) as ImageProvider,
+                        ),
+                        Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: CircleAvatar(
+                            backgroundColor: AppTheme.primaryColor,
+                            radius: 18,
+                            child: IconButton(
+                              icon: const Icon(Icons.camera_alt, size: 18),
+                              color: Colors.white,
+                              onPressed: _pickImage,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      userData!['name'],
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'RobotoSlab',
+                      ),
+                    ),
+                    Text(
+                      userData!['email'],
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontFamily: 'RobotoSlab',
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -221,27 +140,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-
-  Widget _buildCategoryProgress(String category, double percentage) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          category[0].toUpperCase() + category.substring(1),
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 4),
-        LinearProgressIndicator(
-          value: percentage / 100,
-          backgroundColor: Colors.grey[200],
-          valueColor: AlwaysStoppedAnimation<Color>(
-            percentage >= 70 ? Colors.green : 
-            percentage >= 50 ? Colors.orange : Colors.red,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text('$percentage%'),
-      ],
-    );
-  }
-} 
+}

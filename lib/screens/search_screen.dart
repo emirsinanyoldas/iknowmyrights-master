@@ -44,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Future<void> _saveSearchHistory(String query) async {
     if (query.trim().isEmpty) return;
-    
+
     final prefs = await SharedPreferences.getInstance();
     _searchHistory.insert(0, query);
     if (_searchHistory.length > 10) {
@@ -67,12 +67,16 @@ class _SearchScreenState extends State<SearchScreen> {
         }
       },
     );
-    setState(() {});
+    setState(() {
+      _isListening = true;
+    });
   }
 
   void _stopListening() {
     _speech.stop();
-    setState(() {});
+    setState(() {
+      _isListening = false;
+    });
   }
 
   Future<void> _performSearch(String query) async {
@@ -85,7 +89,7 @@ class _SearchScreenState extends State<SearchScreen> {
     try {
       // JSON dosyasını yükle
       final String jsonString =
-          await DefaultAssetBundle.of(context).loadString('assets/data/search_data.json');
+      await DefaultAssetBundle.of(context).loadString('assets/data/search_data.json');
       final Map<String, dynamic> data = json.decode(jsonString);
 
       // Arama sonuçlarını filtrele
@@ -142,7 +146,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
                 IconButton(
-                  onPressed: _isListening ? _startListening : _stopListening,
+                  onPressed: _isListening ? _stopListening : _startListening,
                   icon: Icon(
                     _isListening ? Icons.mic : Icons.mic_off,
                     color: _isListening ? AppTheme.primaryColor : Colors.grey,
@@ -190,26 +194,26 @@ class _SearchScreenState extends State<SearchScreen> {
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : ListView.builder(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: _searchResults.length,
-                    itemBuilder: (context, index) {
-                      final result = _searchResults[index];
-                      return Card(
-                        margin: const EdgeInsets.only(bottom: 16),
-                        child: ListTile(
-                          title: Text(result['title']),
-                          subtitle: Text(
-                            result['text'],
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          onTap: () {
-                            // Detay sayfasına yönlendir
-                          },
-                        ),
-                      );
+              padding: const EdgeInsets.all(16),
+              itemCount: _searchResults.length,
+              itemBuilder: (context, index) {
+                final result = _searchResults[index];
+                return Card(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: ListTile(
+                    title: Text(result['title']),
+                    subtitle: Text(
+                      result['text'],
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onTap: () {
+                      // Detay sayfasına yönlendir
                     },
                   ),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -222,4 +226,4 @@ class _SearchScreenState extends State<SearchScreen> {
     _speech.cancel();
     super.dispose();
   }
-} 
+}
