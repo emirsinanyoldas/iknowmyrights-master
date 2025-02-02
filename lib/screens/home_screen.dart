@@ -111,6 +111,7 @@ class AnimatedRightsCard extends StatefulWidget {
 
 class _AnimatedRightsCardState extends State<AnimatedRightsCard> {
   double _scale = 1.0;
+  bool _isTapped = false;
 
   @override
   Widget build(BuildContext context) {
@@ -125,14 +126,21 @@ class _AnimatedRightsCardState extends State<AnimatedRightsCard> {
           _scale = 1.0; // Normal boyuta dön
         });
       },
-      child: AnimatedScale(
-        scale: _scale,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.fastOutSlowIn,
-        child: RightsCard(
-          title: widget.title,
-          imagePath: widget.imagePath,
-          type: widget.type,
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            _isTapped = !_isTapped;
+          });
+        },
+        child: AnimatedScale(
+          scale: _isTapped ? 0.95 : _scale, // Tıklama sonrası küçülme
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          child: RightsCard(
+            title: widget.title,
+            imagePath: widget.imagePath,
+            type: widget.type,
+          ),
         ),
       ),
     );
