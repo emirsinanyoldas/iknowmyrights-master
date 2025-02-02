@@ -32,27 +32,27 @@ class HomeScreen extends StatelessWidget {
         mainAxisSpacing: 16,
         crossAxisSpacing: 16,
         children: const [
-          RightsCard(
+          AnimatedRightsCard(
             title: 'Engelli Hakları',
             imagePath: 'assets/images/disability_rights.jpg',
             type: 'disability',
           ),
-          RightsCard(
+          AnimatedRightsCard(
             title: 'Kadın Hakları',
             imagePath: 'assets/images/women_rights.jpg',
             type: 'women',
           ),
-          RightsCard(
+          AnimatedRightsCard(
             title: 'Yaşlı Hakları',
             imagePath: 'assets/images/elderly_rights.jpg',
             type: 'elderly',
           ),
-          RightsCard(
+          AnimatedRightsCard(
             title: 'Çocuk Hakları',
             imagePath: 'assets/images/children_rights.jpg',
             type: 'children',
           ),
-          RightsCard(
+          AnimatedRightsCard(
             title: 'Temel Haklar',
             imagePath: 'assets/images/fundamental_rights.jpg',
             type: 'fundamental',
@@ -91,4 +91,50 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-} 
+}
+
+class AnimatedRightsCard extends StatefulWidget {
+  final String title;
+  final String imagePath;
+  final String type;
+
+  const AnimatedRightsCard({
+    super.key,
+    required this.title,
+    required this.imagePath,
+    required this.type,
+  });
+
+  @override
+  _AnimatedRightsCardState createState() => _AnimatedRightsCardState();
+}
+
+class _AnimatedRightsCardState extends State<AnimatedRightsCard> {
+  double _scale = 1.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) {
+        setState(() {
+          _scale = 1.1; // Hafif büyüme
+        });
+      },
+      onExit: (_) {
+        setState(() {
+          _scale = 1.0; // Normal boyuta dön
+        });
+      },
+      child: AnimatedScale(
+        scale: _scale,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.fastOutSlowIn,
+        child: RightsCard(
+          title: widget.title,
+          imagePath: widget.imagePath,
+          type: widget.type,
+        ),
+      ),
+    );
+  }
+}
