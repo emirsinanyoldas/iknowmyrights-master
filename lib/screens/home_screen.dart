@@ -61,6 +61,10 @@ class HomeScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
+        selectedItemColor: Colors.blueAccent, // Seçili öğe rengi
+        unselectedItemColor: Colors.grey, // Seçili olmayan öğe rengi
+        backgroundColor: Colors.white, // Arka plan rengi
+        type: BottomNavigationBarType.fixed, // Sabit tip
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -88,6 +92,27 @@ class HomeScreen extends StatelessWidget {
             );
           }
         },
+        showSelectedLabels: true, // Etiketlerin görünmesini sağla
+        showUnselectedLabels: true, // Seçili olmayan etiketlerin görünmesini sağla
+        selectedLabelStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Colors.blueAccent, // Aydınlık yazı rengi
+        ),
+        unselectedLabelStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Colors.grey, // Aydınlık yazı rengi
+        ),
+        selectedIconTheme: IconThemeData(
+          size: 30, // Seçili öğe simge boyutu
+          color: Colors.blueAccent, // Seçili öğe simge rengi
+        ),
+        unselectedIconTheme: IconThemeData(
+          size: 30, // Seçili olmayan öğe simge boyutu
+          color: Colors.grey, // Seçili olmayan öğe simge rengi
+        ),
+        elevation: 10, // Gölgelendirme efekti
       ),
     );
   }
