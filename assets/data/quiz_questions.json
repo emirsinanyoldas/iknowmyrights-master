@@ -14,6 +14,50 @@
             ],
             "correctAnswer": 0,
             "explanation": "5378 sayılı Engelliler Hakkında Kanun, engelli bireylerin eğitim hakkını güvence altına alır."
+          },
+          {
+            "question": "Engelli bireylerin sosyal güvenlik hakları kapsamında sağlanan iş güvencesi hangi kurum tarafından denetlenir?",
+            "options": [
+              "Aile ve Sosyal Hizmetler Bakanlığı",
+              "İşkur",
+              "SGK",
+              "Adalet Bakanlığı"
+            ],
+            "correctAnswer": 2,
+            "explanation": "Engelli bireylerin sosyal güvenlik hakları SGK tarafından denetlenir."
+          },
+          {
+            "question": "Engelli bireylerin çalışma hayatında yer alabilmesi için hangi destek sağlanır?",
+            "options": [
+              "Erişilebilirlik desteği",
+              "Çalışma güvencesi",
+              "Meslek edindirme kursları",
+              "Özürlüye özel iş alanları"
+            ],
+            "correctAnswer": 0,
+            "explanation": "Engelli bireylerin çalışma hayatına katılımı için erişilebilirlik desteği sağlanır."
+          },
+          {
+            "question": "Engelli bireylerin sağlık hizmetlerinden ücretsiz yararlanma hakkı hangi durumda geçerlidir?",
+            "options": [
+              "Her engellinin sağlık raporu alması durumunda",
+              "Aile bireyinin engelli olması durumunda",
+              "Yalnızca devlet hastanelerinde",
+              "Sağlık sigortası olanlarda"
+            ],
+            "correctAnswer": 0,
+            "explanation": "Engelli bireyler, sağlık raporu alarak sağlık hizmetlerinden ücretsiz yararlanabilir."
+          },
+          {
+            "question": "Engelli bireylerin kamu sektöründe çalıştırılabilmesi için en düşük oran nedir?",
+            "options": [
+              "%2",
+              "%3",
+              "%4",
+              "%5"
+            ],
+            "correctAnswer": 1,
+            "explanation": "Kamu sektöründe engelli bireylerin çalıştırılması için en düşük oran %3'tür."
           }
         ]
       },
@@ -30,77 +74,407 @@
             ],
             "correctAnswer": 2,
             "explanation": "Kadın çalışanlar doğum sonrası 6 ay süreyle yarım çalışma hakkına sahiptir."
-          }
-        ]
-      },
-      "elderly": {
-        "name": "Yaşlı Hakları",
-        "questions": [
+          },
           {
-            "question": "Yaşlı bireylerin huzurevine kabul edilme yaşı kaçtır?",
+            "question": "Kadına yönelik şiddetle mücadelede 6284 sayılı kanunun amacı nedir?",
             "options": [
-              "55",
-              "60", 
-              "65",
-              "70"
-            ],
-            "correctAnswer": 1,
-            "explanation": "60 yaş ve üzeri bireyler huzurevine kabul edilebilir."
-          }
-        ]
-      },
-      "children": {
-        "name": "Çocuk Hakları",
-        "questions": [
-          {
-            "question": "Çocuk işçilerin çalıştırılabileceği haftalık azami çalışma süresi nedir?",
-            "options": [
-              "20 saat",
-              "30 saat", 
-              "35 saat",
-              "40 saat"
+              "Kadınların eğitim hakkını güvence altına almak",
+              "Kadınların emeklilik haklarını düzenlemek",
+              "Kadına yönelik şiddeti önlemek ve mağdurları korumak",
+              "Kadınların iş gücüne katılımını artırmak"
             ],
             "correctAnswer": 2,
-            "explanation": "Çocuk işçiler haftada en fazla 35 saat çalıştırılabilir."
-          }
-        ]
-      },
-      "fundamental": {
-        "name": "Temel Haklar",
-        "questions": [
-          {
-            "question": "Anayasa'ya göre temel hak ve özgürlükler hangi durumlarda sınırlandırılabilir?",
-            "options": [
-              "Hiçbir durumda sınırlandırılamaz",
-              "Sadece savaş durumunda",
-              "Kanunla ve ölçülülük ilkesine uygun olarak",
-              "İdarenin takdirine göre"
-            ],
-            "correctAnswer": 2,
-            "explanation": "Temel hak ve özgürlükler, ancak kanunla ve ölçülülük ilkesine uygun olarak sınırlandırılabilir."
-          }
-        ]
-      }
-    }
-  },
-  "English": {
-    "categories": {
-      "disability": {
-        "name": "Disability Rights",
-        "questions": [
-          {
-            "question": "Which law guarantees the right to education for individuals with disabilities?",
-            "options": [
-              "Law No. 5378 on Disabled People",
-              "Labor Law No. 4857",
-              "Social Services Law No. 2828",
-              "Occupational Health and Safety Law No. 6331"
-            ],
-            "correctAnswer": 0,
-            "explanation": "Law No. 5378 on Disabled People guarantees the right to education for individuals with disabilities."
-          }
-        ]
-      }
-    }
-  }
+            "explanation": "6284 sayılı Kanun, kadına yönelik şiddeti önlemek ve mağdurları korumak amacı taşır."
+          },
+{
+"question": "Kadınların çalışma hayatına katılmasını teşvik etmek amacıyla hangi yasa çıkarılmıştır?",
+"options": [
+"4857 sayılı İş Kanunu",
+"6284 sayılı Aile içi Şiddetle Mücadele Kanunu",
+"5393 sayılı Belediye Kanunu",
+"6331 sayılı İş Sağlığı ve Güvenliği Kanunu"
+],
+"correctAnswer": 0,
+"explanation": "Kadınların çalışma hayatına katılımını teşvik etmek amacıyla 4857 sayılı İş Kanunu çıkarılmıştır."
+},
+{
+"question": "Kadınların eşit işe eşit ücret alması için hangi düzenleme yapılmıştır?",
+"options": [
+"Kadın Çalışanları Koruma Yasası",
+"Kadınlara Eşit Ücret Yasası",
+"Eşitlik Yasası",
+"İş Kanunu'nda eşit ücret maddesi"
+],
+"correctAnswer": 3,
+"explanation": "İş Kanunu'nda eşit işe eşit ücret maddesi yer alır."
+},
+{
+"question": "Kadın hakları ile ilgili en önemli uluslararası sözleşme hangisidir?",
+"options": [
+"CEDAW (Kadınlara Karşı Ayrımcılığın Ortadan Kaldırılması Sözleşmesi)",
+"İstanbul Sözleşmesi",
+"Paris Sözleşmesi",
+"Birleşmiş Milletler Kadın Bildirgesi"
+],
+"correctAnswer": 0,
+"explanation": "Kadın hakları ile ilgili en önemli uluslararası sözleşme, CEDAW'dır."
 }
+]
+},
+"elderly": {
+"name": "Yaşlı Hakları",
+"questions": [
+{
+"question": "Yaşlı bireylerin huzurevine kabul edilme yaşı kaçtır?",
+"options": [
+"55",
+"60",
+"65",
+"70"
+],
+"correctAnswer": 1,
+"explanation": "60 yaş ve üzeri bireyler huzurevine kabul edilebilir."
+},
+{
+"question": "Yaşlı bireylere ücretsiz toplu taşıma hakkı hangi yaş itibarıyla sağlanmaktadır?",
+"options": [
+"55 yaş",
+"60 yaş",
+"65 yaş",
+"70 yaş"
+],
+"correctAnswer": 2,
+"explanation": "65 yaş ve üzeri bireyler toplu taşıma hizmetlerinden ücretsiz faydalanabilir."
+},
+{
+"question": "Yaşlı bireyler için sosyal güvenlik kapsamında hangi hizmetler verilir?",
+"options": [
+"Sosyal yardım",
+"Emeklilik maaşı",
+"Sağlık hizmeti",
+"Hepsi"
+],
+"correctAnswer": 3,
+"explanation": "Yaşlı bireyler için sosyal güvenlik kapsamında sosyal yardım, emeklilik maaşı ve sağlık hizmeti gibi çeşitli hizmetler verilir."
+},
+{
+"question": "Yaşlı bireylere yönelik bakım hizmeti hangi kurumlar tarafından sağlanır?",
+"options": [
+"Belediye",
+"Aile ve Sosyal Hizmetler Bakanlığı",
+"Sağlık Bakanlığı",
+"Bütün bu kurumlar"
+],
+"correctAnswer": 3,
+"explanation": "Yaşlı bireylere yönelik bakım hizmeti, çeşitli kamu kurumları tarafından sağlanır."
+},
+{
+"question": "Yaşlı bireylerin, bakım hizmetlerinden faydalanabilmesi için hangi şart aranmaktadır?",
+"options": [
+"Bakım sigortası olması",
+"Gelir testinden geçmesi",
+"Yaşlılık maaşı alması",
+"Hiçbir şart aranmamaktadır"
+],
+"correctAnswer": 1,
+"explanation": "Yaşlı bireylerin bakım hizmetlerinden faydalanabilmesi için gelir testinden geçmesi gerekmektedir."
+}
+]
+},
+"children": {
+"name": "Çocuk Hakları",
+"questions": [
+{
+"question": "Çocuk işçilerin çalıştırılabileceği haftalık azami çalışma süresi nedir?",
+"options": [
+"20 saat",
+"30 saat",
+"35 saat",
+"40 saat"
+],
+"correctAnswer": 2,
+"explanation": "Çocuk işçiler haftada en fazla 35 saat çalıştırılabilir."
+},
+{
+"question": "Bir çocuğun eğitim hakkı hangi uluslararası sözleşme ile güvence altına alınmıştır?",
+"options": [
+"Avrupa İnsan Hakları Sözleşmesi",
+"Çocuk Haklarına Dair Sözleşme",
+"İstanbul Sözleşmesi",
+"Viyana Sözleşmesi"
+],
+"correctAnswer": 1,
+"explanation": "Bir çocuğun eğitim hakkı Çocuk Haklarına Dair Sözleşme ile güvence altına alınmıştır."
+},
+{
+"question": "Çocukların en erken hangi yaşta okula gitmesi sağlanır?",
+"options": [
+"5 yaş",
+"6 yaş",
+"7 yaş",
+"8 yaş"
+],
+"correctAnswer": 1,
+"explanation": "Çocukların okula başlaması için en erken yaş 6'dır."
+},
+{
+"question": "Çocuk işçilerin çalışabileceği sektörler hangileridir?",
+"options": [
+"Tarım ve inşaat",
+"Sağlık sektörü",
+"Eğitim sektörü",
+"Çocuk işçi çalıştırılması yasaktır"
+],
+"correctAnswer": 3,
+"explanation": "Çocuk işçilerin çalıştırılması, özellikle tehlikeli sektörlerde yasaktır."
+},
+{
+"question": "Çocukların fiziksel ve duygusal gelişimi için hangi tür bakım hizmetleri sağlanır?",
+"options": [
+"Devlet bakım hizmetleri",
+"Aile destek programları",
+"Eğitim desteği",
+"Hepsi"
+],
+"correctAnswer": 3,
+"explanation": "Çocukların gelişimi için devlet bakım hizmetleri, aile destek programları ve eğitim desteği gibi çeşitli hizmetler sağlanır."
+}
+]
+},
+"fundamental": {
+"name": "Temel Haklar",
+"questions": [
+{
+"question": "Anayasa'ya göre temel hak ve özgürlükler hangi durumlarda sınırlandırılabilir?",
+"options": [
+"Hiçbir durumda sınırlandırılamaz",
+"Sadece savaş durumunda",
+"Kanunla ve ölçülülük ilkesine uygun olarak",
+"İdarenin takdirine göre"
+],
+"correctAnswer": 2,
+"explanation": "Temel hak ve özgürlükler, ancak kanunla ve ölçülülük ilkesine uygun olarak sınırlandırılabilir."
+},
+{
+"question": "Temel hakların ihlali durumunda birey hangi kuruma başvurabilir?",
+"options": [
+"Valilik",
+"İçişleri Bakanlığı",
+"Anayasa Mahkemesi",
+"Milli Eğitim Bakanlığı"
+],
+"correctAnswer": 2,
+"explanation": "Temel hakların ihlali durumunda birey Anayasa Mahkemesi'ne başvurabilir."
+},
+{
+"question": "Temel haklar kapsamında, kişi hangi durumda haksız bir şekilde tutuklanamaz?",
+"options": [
+"Suçlu olduğu kesinleştiğinde",
+"Yeterli delil varsa",
+"Savunma hakkı verilmeden",
+"Savunma hakkı verilirse"
+],
+"correctAnswer": 2,
+"explanation": "Temel haklar kapsamında, savunma hakkı verilmeden kimse haksız bir şekilde tutuklanamaz."
+},
+{
+"question": "Temel haklar ile ilgili başvurulabilecek ilk iç hukuk yolu hangisidir?",
+"options": [
+"Anayasa Mahkemesi",
+"İdari Mahkeme",
+"Aile Mahkemesi",
+"Yüksek Mahkeme"
+],
+"correctAnswer": 1,
+"explanation": "Temel haklar ihlal edildiğinde başvurulabilecek ilk iç hukuk yolu idari mahkemelerdir."
+},
+{
+"question": "Anayasaya göre, hangi durumda temel haklar sınırlandırılabilir?",
+"options": [
+"Sadece askeri darbe durumunda",
+"Toplum sağlığı için gerekli olduğunda",
+"Sadece içki yasağı durumunda",
+"Devletin ekonomik çıkarları için"
+],
+"correctAnswer": 1,
+"explanation": "Temel haklar, toplum sağlığı için gerekli olduğunda sınırlanabilir."
+}
+]
+}
+}
+},
+"English": {
+"categories": {
+"disability": {
+"name": "Disability Rights",
+"questions": [
+{
+"question": "Which law guarantees the right to education for individuals with disabilities?",
+"options": [
+"Law No. 5378 on Disabled People",
+"Labor Law No. 4857",
+"Social Services Law No. 2828",
+"Occupational Health and Safety Law No. 6331"
+],
+"correctAnswer": 0,
+"explanation": "Law No. 5378 on Disabled People guarantees the right to education for individuals with disabilities."
+},
+{
+"question": "Which institution supervises the job security provided under the social security rights of disabled individuals?",
+"options": [
+"Ministry of Family and Social Services",
+"İşkur",
+"Social Security Institution (SGK)",
+"Ministry of Justice"
+],
+"correctAnswer": 2,
+"explanation": "The Social Security Institution (SGK) supervises the social security rights of disabled individuals."
+},
+{
+"question": "What support is provided to ensure the participation of disabled individuals in the workforce?",
+"options": [
+"Accessibility support",
+"Job security",
+"Vocational training courses",
+"Special job opportunities for the disabled"
+],
+"correctAnswer": 0,
+"explanation": "Accessibility support is provided to ensure the participation of disabled individuals in the workforce."
+},
+{
+"question": "Under what condition can individuals with disabilities benefit from free healthcare services?",
+"options": [
+"When they have a disability report",
+"When a family member is disabled",
+"Only in state hospitals",
+"When they have health insurance"
+],
+"correctAnswer": 0,
+"explanation": "Individuals with disabilities can benefit from free healthcare services with a disability report."
+},
+{
+"question": "What is the minimum quota for employing disabled individuals in the public sector?",
+"options": [
+"2%",
+"3%",
+"4%",
+"5%"
+],
+"correctAnswer": 1,
+"explanation": "The minimum quota for employing disabled individuals in the public sector is 3%."
+}
+]
+},
+"women": {
+"name": "Women's Rights",
+"questions": [
+{
+"question": "What is the right to part-time work after maternity for female employees?",
+"options": [
+"2 months",
+"4 months",
+"6 months",
+"12 months"
+],
+"correctAnswer": 2,
+"explanation": "Female employees are entitled to part-time work for 6 months after maternity."
+},
+{
+"question": "What is the purpose of the Law No. 6284 in the fight against violence against women?",
+"options": [
+"To ensure women's right to education",
+"To regulate women's retirement rights",
+"To prevent violence against women and protect victims",
+"To increase women's participation in the workforce"
+],
+"correctAnswer": 2,
+"explanation": "Law No. 6284 aims to prevent violence against women and protect victims."
+},
+{
+"question": "Which law was enacted to encourage women's participation in the workforce?",
+"options": [
+"Labor Law No. 4857",
+"Law No. 6284 on Combating Domestic Violence",
+"Municipalities Law No. 5393",
+"Occupational Health and Safety Law No. 6331"
+],
+"correctAnswer": 0,
+"explanation": "Labor Law No. 4857 was enacted to encourage women's participation in the workforce."
+},
+{
+"question": "What regulation ensures equal pay for equal work for women?",
+"options": [
+"Women's Protection Law",
+"Equal Pay for Equal Work Law",
+"Equality Law",
+"Labor Law Equal Pay Clause"
+],
+"correctAnswer": 3,
+"explanation": "The Labor Law includes an equal pay clause for equal work."
+},
+{
+"question": "What is the most important international treaty related to women's rights?",
+"options": [
+"CEDAW (Convention on the Elimination of All Forms of Discrimination Against Women)",
+"Istanbul Convention",
+"Paris Agreement",
+"UN Women's Declaration"
+],
+"correctAnswer": 0,
+"explanation": "The most important international treaty related to women's rights is CEDAW."
+}
+]
+},
+"elderly": {
+"name": "Elderly Rights",
+"questions": [
+{
+"question": "What is the age for acceptance into a nursing home for elderly individuals?",
+"options": [
+"55",
+"60",
+"65",
+"70"
+],
+"correctAnswer": 1,
+"explanation": "Individuals aged 60 and over can be accepted into nursing homes."
+},
+{
+"question": "At what age do elderly individuals have the right to free public transportation?",
+"options": [
+"55 years",
+"60 years",
+"65 years",
+"70 years"
+],
+"correctAnswer": 2,
+"explanation": "Elderly individuals aged 65 and over can benefit from free public transportation."
+},
+  {
+    "question": "What services are provided under social security for elderly individuals?",
+    "options": [
+      "Social assistance",
+      "Retirement pension",
+      "Healthcare services",
+      "All of these"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Various services, including social assistance, retirement pensions, and healthcare services, are provided under social security for elderly individuals."
+  },
+  {
+    "question": "Which institutions provide care services for elderly individuals?",
+    "options": [
+      "Municipalities",
+      "Private institutions",
+      "Non-profit organizations",
+      "All of the above"
+    ],
+    "correctAnswer": 3,
+    "explanation": "Care services for elderly individuals are provided by various institutions including municipalities, private institutions, and non-profit organizations."
+  }
+]
+}
+}
+}
+}
+
