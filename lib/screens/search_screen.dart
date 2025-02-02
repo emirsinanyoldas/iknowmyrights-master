@@ -3,6 +3,9 @@ import 'package:iknowmyrights/theme/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:convert';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:iknowmyrights/providers/language_provider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -83,14 +86,14 @@ class _SearchScreenState extends State<SearchScreen> {
     });
 
     try {
-      // JSON dosyasını yükle
       final String jsonString =
           await DefaultAssetBundle.of(context).loadString('assets/data/search_data.json');
       final Map<String, dynamic> data = json.decode(jsonString);
+      final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+      final language = languageProvider.currentLocale.languageCode == 'tr' ? 'Turkish' : 'English';
 
-      // Arama sonuçlarını filtrele
       final List<Map<String, dynamic>> results = [];
-      data['content'].forEach((item) {
+      data[language]['content'].forEach((item) {
         if (item['title'].toString().toLowerCase().contains(query.toLowerCase()) ||
             item['text'].toString().toLowerCase().contains(query.toLowerCase())) {
           results.add(item);
@@ -102,15 +105,15 @@ class _SearchScreenState extends State<SearchScreen> {
         _isLoading = false;
       });
 
-      // Arama geçmişine ekle
       await _saveSearchHistory(query);
     } catch (e) {
       setState(() {
         _isLoading = false;
       });
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Arama yapılırken bir hata oluştu')),
+          SnackBar(content: Text(l10n.link_error)),
         );
       }
     }
@@ -118,9 +121,10 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Arama'),
+        title: Text(l10n.search),
       ),
       body: Column(
         children: [
@@ -132,7 +136,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Hak arama...',
+                      hintText: l10n.search_rights,
                       prefixIcon: const Icon(Icons.search),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -152,13 +156,13 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           if (_searchHistory.isNotEmpty) ...[
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Son Aramalar',
-                  style: TextStyle(
+                  l10n.search,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -204,7 +208,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           onTap: () {
-                            // Detay sayfasına yönlendir
+                            // Detay sayfasına yönlendirme yapılabilir
                           },
                         ),
                       );
@@ -222,4 +226,4 @@ class _SearchScreenState extends State<SearchScreen> {
     _speech.cancel();
     super.dispose();
   }
-} 
+}

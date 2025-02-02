@@ -1,75 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:iknowmyrights/screens/about_screen.dart';
 import 'package:iknowmyrights/screens/help_screen.dart';
+import 'package:iknowmyrights/theme/theme_provider.dart';
+import 'package:iknowmyrights/providers/language_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class CustomDrawer extends StatefulWidget {
+class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
   @override
-  State<CustomDrawer> createState() => _CustomDrawerState();
-}
-
-class _CustomDrawerState extends State<CustomDrawer> {
-  bool isDarkMode = false;
-  String currentLanguage = 'TR';
-
-  void _showSettingsDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Ayarlar'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Karanlık Mod'),
-                Switch(
-                  value: isDarkMode,
-                  onChanged: (value) {
-                    setState(() {
-                      isDarkMode = value;
-                    });
-                    Navigator.pop(context); // Dialog'u kapat
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Kapat'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Drawer(
-      child: Column(
+      child: ListView(
+        padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Colors.blue,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   Icons.account_balance,
                   size: 50,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'Haklarımı Biliyorum',
+                Text(
+                  l10n.app_name,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontSize: 24,
                   ),
                 ),
@@ -78,7 +42,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.info),
-            title: const Text('Hakkında'),
+            title: Text(l10n.about),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -87,53 +51,52 @@ class _CustomDrawerState extends State<CustomDrawer> {
               );
             },
           ),
-          ListTile(
-            leading: Icon(isDarkMode ? Icons.dark_mode : Icons.light_mode),
-            title: const Text('Karanlık Mod'),
-            trailing: Switch(
-              value: isDarkMode,
-              onChanged: (value) {
-                setState(() {
-                  isDarkMode = value;
-                });
-              },
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, _) => ListTile(
+              leading: Icon(themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode),
+              title: Text(l10n.dark_mode),
+              trailing: Switch(
+                value: themeProvider.isDarkMode,
+                onChanged: (value) => themeProvider.toggleTheme(),
+              ),
             ),
           ),
-          ListTile(
-            leading: const Icon(Icons.language),
-            title: const Text('Dil'),
-            trailing: DropdownButton<String>(
-              value: currentLanguage,
-              items: const [
-                DropdownMenuItem(
-                  value: 'TR',
-                  child: Text('Türkçe'),
+          Consumer<LanguageProvider>(
+            builder: (context, languageProvider, _) => ListTile(
+              leading: const Icon(Icons.language),
+              title: Text(l10n.language),
+              trailing: PopupMenuButton<String>(
+                initialValue: languageProvider.currentLocale.languageCode,
+                onSelected: (String value) {
+                  languageProvider.changeLanguage(value);
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  PopupMenuItem<String>(
+                    value: 'tr',
+                    child: Text(l10n.turkish),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'en',
+                    child: Text(l10n.english),
+                  ),
+                ],
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      languageProvider.currentLocale.languageCode == 'tr'
+                          ? l10n.turkish
+                          : l10n.english,
+                    ),
+                    const Icon(Icons.arrow_drop_down),
+                  ],
                 ),
-                DropdownMenuItem(
-                  value: 'EN',
-                  child: Text('English'),
-                ),
-              ],
-              onChanged: (String? value) {
-                if (value != null) {
-                  setState(() {
-                    currentLanguage = value;
-                  });
-                }
-              },
+              ),
             ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Ayarlar'),
-            onTap: () {
-              Navigator.pop(context); // Drawer'ı kapat
-              _showSettingsDialog(context);
-            },
           ),
           ListTile(
             leading: const Icon(Icons.help),
-            title: const Text('Yardım'),
+            title: Text(l10n.help),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(

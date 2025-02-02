@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:iknowmyrights/theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:iknowmyrights/providers/language_provider.dart';
 
 class RightsDetailScreen extends StatefulWidget {
   final String title;
@@ -24,12 +27,13 @@ class _RightsDetailScreenState extends State<RightsDetailScreen> {
 
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
+    final l10n = AppLocalizations.of(context)!;
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     } else {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Link açılamadı')),
+        SnackBar(content: Text(l10n.link_error)),
       );
     }
   }
@@ -62,9 +66,11 @@ class _RightsDetailScreenState extends State<RightsDetailScreen> {
 
       final String jsonString = await DefaultAssetBundle.of(context).loadString(jsonPath);
       final Map<String, dynamic> data = json.decode(jsonString);
+      final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
+      final language = languageProvider.currentLocale.languageCode == 'tr' ? 'Turkish' : 'English';
       
       setState(() {
-        subtopics = data['Turkish']['subtopics'];
+        subtopics = data[language]['subtopics'];
         isLoading = false;
       });
     } catch (e) {
@@ -77,6 +83,7 @@ class _RightsDetailScreenState extends State<RightsDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -163,7 +170,7 @@ class _RightsDetailScreenState extends State<RightsDetailScreen> {
                                 ElevatedButton.icon(
                                   onPressed: () => _launchURL(subtopic['url']),
                                   icon: const Icon(Icons.link),
-                                  label: const Text('Daha fazla bilgi için tıklayın'),
+                                  label: Text(l10n.more_info),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppTheme.secondaryColor,
                                     foregroundColor: Colors.white,
@@ -185,4 +192,4 @@ class _RightsDetailScreenState extends State<RightsDetailScreen> {
           ),
     );
   }
-} 
+}

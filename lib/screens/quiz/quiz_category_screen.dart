@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:iknowmyrights/theme/app_theme.dart';
 import 'package:iknowmyrights/screens/quiz/quiz_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuizCategoryScreen extends StatelessWidget {
   const QuizCategoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hak Bilgisi Yarışması'),
+        title: Text(l10n.quiz),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'Kategori Seçin',
-              style: TextStyle(
+            Text(
+              l10n.rights_categories,
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: AppTheme.primaryColor,
@@ -34,37 +36,37 @@ class QuizCategoryScreen extends StatelessWidget {
                 children: [
                   _buildCategoryCard(
                     context,
-                    'Engelli Hakları',
+                    l10n.disability_rights,
                     Icons.accessible,
                     'disability',
                   ),
                   _buildCategoryCard(
                     context,
-                    'Kadın Hakları',
+                    l10n.women_rights,
                     Icons.female,
                     'women',
                   ),
                   _buildCategoryCard(
                     context,
-                    'Yaşlı Hakları',
+                    l10n.elderly_rights,
                     Icons.elderly,
                     'elderly',
                   ),
                   _buildCategoryCard(
                     context,
-                    'Çocuk Hakları',
+                    l10n.children_rights,
                     Icons.child_care,
                     'children',
                   ),
                   _buildCategoryCard(
                     context,
-                    'Temel Haklar',
+                    l10n.fundamental_rights,
                     Icons.gavel,
                     'fundamental',
                   ),
                   _buildCategoryCard(
                     context,
-                    'Karışık',
+                    l10n.mixed,
                     Icons.shuffle,
                     'mixed',
                   ),
@@ -133,4 +135,4 @@ class QuizCategoryScreen extends StatelessWidget {
       ),
     );
   }
-} 
+}
