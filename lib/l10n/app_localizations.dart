@@ -92,6 +92,9 @@ class AppLocalizations {
     return _localizedValues[locale.languageCode]?[key] ?? key;
   }
 
+  String get search => translate('search');
+  String get search_rights => translate('search_rights');
+
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 }
 

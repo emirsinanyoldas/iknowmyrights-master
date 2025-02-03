@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       builder: (context, themeProvider, languageProvider, child) {
         return MaterialApp(
           title: 'Haklarımı Biliyorum',
-          theme: themeProvider.themeData,
+          theme: themeProvider.isDarkMode ? ThemeData.dark() : ThemeData.light(),
           locale: languageProvider.currentLocale,
           localizationsDelegates: const [
             AppLocalizations.delegate,

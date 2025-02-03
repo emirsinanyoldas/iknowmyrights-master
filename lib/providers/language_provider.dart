@@ -1,38 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LanguageProvider extends ChangeNotifier {
-  static const String _languageKey = 'selected_language';
-  Locale _currentLocale = const Locale('tr');
-  bool _isInitialized = false;
-
-  Locale get currentLocale => _currentLocale;
+class LanguageProvider with ChangeNotifier {
+  String _currentLanguage = 'TR';
+  
+  String get currentLanguage => _currentLanguage;
+  Locale get currentLocale => Locale(_currentLanguage.toLowerCase(), '');
 
   LanguageProvider() {
-    _loadLanguage();
+    _loadLanguagePreference();
   }
 
-  Future<void> _loadLanguage() async {
-    if (_isInitialized) return;
-    
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final String langCode = prefs.getString(_languageKey) ?? 'tr';
-      _currentLocale = Locale(langCode);
-      _isInitialized = true;
-      notifyListeners();
-    } catch (e) {
-      debugPrint('Error loading language: $e');
-    }
+  Future<void> _loadLanguagePreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    _currentLanguage = prefs.getString('language') ?? 'TR';
+    notifyListeners();
   }
 
-  void changeLanguage(String languageCode) {
-    if (_currentLocale.languageCode != languageCode) {
-      _currentLocale = Locale(languageCode);
-      SharedPreferences.getInstance().then((prefs) {
-        prefs.setString(_languageKey, languageCode);
-      });
-      notifyListeners();
-    }
+  Future<void> setLanguage(String languageCode) async {
+    _currentLanguage = languageCode;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('language', languageCode);
+    notifyListeners();
+  }
+
+  Future<void> changeLanguage(String languageCode) async {
+    await setLanguage(languageCode);
   }
 }
