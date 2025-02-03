@@ -32,37 +32,37 @@ class QuizCategoryScreen extends StatelessWidget {
                 mainAxisSpacing: 16,
                 crossAxisSpacing: 16,
                 children: [
-                  _buildCategoryCard(
+                  _buildAnimatedCategoryCard(
                     context,
                     'Engelli Hakları',
                     Icons.accessible,
                     'disability',
                   ),
-                  _buildCategoryCard(
+                  _buildAnimatedCategoryCard(
                     context,
                     'Kadın Hakları',
                     Icons.female,
                     'women',
                   ),
-                  _buildCategoryCard(
+                  _buildAnimatedCategoryCard(
                     context,
                     'Yaşlı Hakları',
                     Icons.elderly,
                     'elderly',
                   ),
-                  _buildCategoryCard(
+                  _buildAnimatedCategoryCard(
                     context,
                     'Çocuk Hakları',
                     Icons.child_care,
                     'children',
                   ),
-                  _buildCategoryCard(
+                  _buildAnimatedCategoryCard(
                     context,
                     'Temel Haklar',
                     Icons.gavel,
                     'fundamental',
                   ),
-                  _buildCategoryCard(
+                  _buildAnimatedCategoryCard(
                     context,
                     'Karışık',
                     Icons.shuffle,
@@ -77,40 +77,38 @@ class QuizCategoryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryCard(
+  Widget _buildAnimatedCategoryCard(
       BuildContext context,
       String title,
       IconData icon,
       String category,
       ) {
-    return StatefulBuilder(
-      builder: (context, setState) {
-        bool isHovered = false;
-
-        return MouseRegion(
-          onEnter: (_) => setState(() => isHovered = true),
-          onExit: (_) => setState(() => isHovered = false),
-          child: AnimatedScale(
-            scale: isHovered ? 1.2 : 1.0,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => QuizScreen(category: category),
-                    ),
-                  );
-                },
+    return MouseRegion(
+      onEnter: (_) {},
+      onExit: (_) {},
+      child: TweenAnimationBuilder(
+        duration: const Duration(milliseconds: 300),
+        tween: Tween<double>(begin: 1.0, end: 1.0),
+        builder: (context, scale, child) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QuizScreen(category: category),
+                ),
+              );
+            },
+            child: Transform.scale(
+              scale: scale,
+              child: Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100), // Yuvarlak kenar
+                ),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
+                    shape: BoxShape.circle, // Tam yuvarlak kart
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -143,9 +141,9 @@ class QuizCategoryScreen extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
