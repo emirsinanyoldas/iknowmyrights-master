@@ -4,15 +4,12 @@ import 'package:iknowmyrights/widgets/custom_drawer.dart';
 import 'package:iknowmyrights/screens/quiz/quiz_category_screen.dart';
 import 'package:iknowmyrights/screens/search_screen.dart';
 import 'package:iknowmyrights/widgets/user_profile_button.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    
     return Scaffold(
       appBar: AppBar(
         leading: Builder(
@@ -23,7 +20,7 @@ class HomeScreen extends StatelessWidget {
             },
           ),
         ),
-        title: Text(l10n.app_name),
+        title: const Text('Haklarımı Biliyorum'),
         actions: const [
           UserProfileButton(),
         ],
@@ -34,29 +31,29 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         mainAxisSpacing: 16,
         crossAxisSpacing: 16,
-        children: [
-          RightsCard(
-            title: l10n.disability_rights,
+        children: const [
+          AnimatedRightsCard(
+            title: 'Engelli Hakları',
             imagePath: 'assets/images/disability_rights.jpg',
             type: 'disability',
           ),
-          RightsCard(
-            title: l10n.women_rights,
+          AnimatedRightsCard(
+            title: 'Kadın Hakları',
             imagePath: 'assets/images/women_rights.jpg',
             type: 'women',
           ),
-          RightsCard(
-            title: l10n.elderly_rights,
+          AnimatedRightsCard(
+            title: 'Yaşlı Hakları',
             imagePath: 'assets/images/elderly_rights.jpg',
             type: 'elderly',
           ),
-          RightsCard(
-            title: l10n.children_rights,
+          AnimatedRightsCard(
+            title: 'Çocuk Hakları',
             imagePath: 'assets/images/children_rights.jpg',
             type: 'children',
           ),
-          RightsCard(
-            title: l10n.fundamental_rights,
+          AnimatedRightsCard(
+            title: 'Temel Haklar',
             imagePath: 'assets/images/fundamental_rights.jpg',
             type: 'fundamental',
           ),
@@ -64,18 +61,22 @@ class HomeScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
-        items: [
+        selectedItemColor: Colors.blueAccent, // Seçili öğe rengi
+        unselectedItemColor: Colors.grey, // Seçili olmayan öğe rengi
+        backgroundColor: Colors.white, // Arka plan rengi
+        type: BottomNavigationBarType.fixed, // Sabit tip
+        items: const [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.home),
-            label: l10n.home,
+            icon: Icon(Icons.home),
+            label: 'Ana Sayfa',
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.quiz),
-            label: l10n.quiz,
+            icon: Icon(Icons.quiz),
+            label: 'Quiz',
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.search),
-            label: l10n.search,
+            icon: Icon(Icons.search),
+            label: 'Arama',
           ),
         ],
         onTap: (index) {
@@ -91,6 +92,81 @@ class HomeScreen extends StatelessWidget {
             );
           }
         },
+        showSelectedLabels: true, // Etiketlerin görünmesini sağla
+        showUnselectedLabels: true, // Seçili olmayan etiketlerin görünmesini sağla
+        selectedLabelStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Colors.blueAccent, // Aydınlık yazı rengi
+        ),
+        unselectedLabelStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          color: Colors.grey, // Aydınlık yazı rengi
+        ),
+        selectedIconTheme: IconThemeData(
+          size: 30, // Seçili öğe simge boyutu
+          color: Colors.blueAccent, // Seçili öğe simge rengi
+        ),
+        unselectedIconTheme: IconThemeData(
+          size: 30, // Seçili olmayan öğe simge boyutu
+          color: Colors.grey, // Seçili olmayan öğe simge rengi
+        ),
+        elevation: 10, // Gölgelendirme efekti
+      ),
+    );
+  }
+}
+
+class AnimatedRightsCard extends StatefulWidget {
+  final String title;
+  final String imagePath;
+  final String type;
+
+  const AnimatedRightsCard({
+    super.key,
+    required this.title,
+    required this.imagePath,
+    required this.type,
+  });
+
+  @override
+  _AnimatedRightsCardState createState() => _AnimatedRightsCardState();
+}
+
+class _AnimatedRightsCardState extends State<AnimatedRightsCard> {
+  double _scale = 1.0;
+  bool _isTapped = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) {
+        setState(() {
+          _scale = 1.1; // Hafif büyüme
+        });
+      },
+      onExit: (_) {
+        setState(() {
+          _scale = 1.0; // Normal boyuta dön
+        });
+      },
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            _isTapped = !_isTapped;
+          });
+        },
+        child: AnimatedScale(
+          scale: _isTapped ? 0.95 : _scale, // Tıklama sonrası küçülme
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          child: RightsCard(
+            title: widget.title,
+            imagePath: widget.imagePath,
+            type: widget.type,
+          ),
+        ),
       ),
     );
   }

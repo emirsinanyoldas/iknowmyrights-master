@@ -3,9 +3,6 @@ import 'package:iknowmyrights/theme/app_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'dart:convert';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
-import 'package:iknowmyrights/providers/language_provider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -47,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Future<void> _saveSearchHistory(String query) async {
     if (query.trim().isEmpty) return;
-    
+
     final prefs = await SharedPreferences.getInstance();
     _searchHistory.insert(0, query);
     if (_searchHistory.length > 10) {
@@ -70,12 +67,16 @@ class _SearchScreenState extends State<SearchScreen> {
         }
       },
     );
-    setState(() {});
+    setState(() {
+      _isListening = true;
+    });
   }
 
   void _stopListening() {
     _speech.stop();
-    setState(() {});
+    setState(() {
+      _isListening = false;
+    });
   }
 
   Future<void> _performSearch(String query) async {
@@ -86,14 +87,14 @@ class _SearchScreenState extends State<SearchScreen> {
     });
 
     try {
+      // JSON dosyasını yükle
       final String jsonString =
-          await DefaultAssetBundle.of(context).loadString('assets/data/search_data.json');
+      await DefaultAssetBundle.of(context).loadString('assets/data/search_data.json');
       final Map<String, dynamic> data = json.decode(jsonString);
-      final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
-      final language = languageProvider.currentLocale.languageCode == 'tr' ? 'Turkish' : 'English';
 
+      // Arama sonuçlarını filtrele
       final List<Map<String, dynamic>> results = [];
-      data[language]['content'].forEach((item) {
+      data['content'].forEach((item) {
         if (item['title'].toString().toLowerCase().contains(query.toLowerCase()) ||
             item['text'].toString().toLowerCase().contains(query.toLowerCase())) {
           results.add(item);
@@ -105,15 +106,15 @@ class _SearchScreenState extends State<SearchScreen> {
         _isLoading = false;
       });
 
+      // Arama geçmişine ekle
       await _saveSearchHistory(query);
     } catch (e) {
       setState(() {
         _isLoading = false;
       });
       if (mounted) {
-        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.link_error)),
+          const SnackBar(content: Text('Arama yapılırken bir hata oluştu')),
         );
       }
     }
@@ -121,10 +122,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.search),
+        title: const Text('Arama'),
       ),
       body: Column(
         children: [
@@ -136,7 +136,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: l10n.search_rights,
+                      hintText: 'Hak arama...',
                       prefixIcon: const Icon(Icons.search),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -146,7 +146,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
                 IconButton(
-                  onPressed: _isListening ? _startListening : _stopListening,
+                  onPressed: _isListening ? _stopListening : _startListening,
                   icon: Icon(
                     _isListening ? Icons.mic : Icons.mic_off,
                     color: _isListening ? AppTheme.primaryColor : Colors.grey,
@@ -156,13 +156,13 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           if (_searchHistory.isNotEmpty) ...[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  l10n.search,
-                  style: const TextStyle(
+                  'Son Aramalar',
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -194,26 +194,26 @@ class _SearchScreenState extends State<SearchScreen> {
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : ListView.builder(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: _searchResults.length,
-                    itemBuilder: (context, index) {
-                      final result = _searchResults[index];
-                      return Card(
-                        margin: const EdgeInsets.only(bottom: 16),
-                        child: ListTile(
-                          title: Text(result['title']),
-                          subtitle: Text(
-                            result['text'],
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          onTap: () {
-                            // Detay sayfasına yönlendirme yapılabilir
-                          },
-                        ),
-                      );
+              padding: const EdgeInsets.all(16),
+              itemCount: _searchResults.length,
+              itemBuilder: (context, index) {
+                final result = _searchResults[index];
+                return Card(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: ListTile(
+                    title: Text(result['title']),
+                    subtitle: Text(
+                      result['text'],
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onTap: () {
+                      // Detay sayfasına yönlendir
                     },
                   ),
+                );
+              },
+            ),
           ),
         ],
       ),

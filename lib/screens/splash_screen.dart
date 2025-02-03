@@ -32,13 +32,19 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'L',
-              style: TextStyle(
-                fontSize: 48,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
+            TweenAnimationBuilder(
+              tween: Tween<double>(begin: 48, end: 60),
+              duration: const Duration(milliseconds: 300), // Daha hızlı animasyon
+              builder: (context, size, child) {
+                return Text(
+                  'L',
+                  style: TextStyle(
+                    fontSize: size,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                );
+              },
             ),
             SizedBox(
               height: 60,
@@ -48,13 +54,19 @@ class _SplashScreenState extends State<SplashScreen> {
                 fit: BoxFit.contain,
               ),
             ),
-            const Text(
-              'ADING',
-              style: TextStyle(
-                fontSize: 48,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
+            TweenAnimationBuilder(
+              tween: Tween<double>(begin: 48, end: 60),
+              duration: const Duration(milliseconds: 300), // Daha hızlı animasyon
+              builder: (context, size, child) {
+                return Text(
+                  'ADING',
+                  style: TextStyle(
+                    fontSize: size,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue,
+                  ),
+                );
+              },
             ),
             const SizedBox(width: 20),
             const SizedBox(
@@ -95,4 +107,4 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-} 
+}

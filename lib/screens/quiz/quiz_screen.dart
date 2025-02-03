@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iknowmyrights/theme/app_theme.dart';
 import 'dart:convert';
 import 'package:iknowmyrights/screens/quiz/quiz_result_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
-import 'package:iknowmyrights/providers/language_provider.dart';
 
 class QuizScreen extends StatefulWidget {
   final String category;
@@ -36,26 +33,24 @@ class _QuizScreenState extends State<QuizScreen> {
       final String jsonString =
           await DefaultAssetBundle.of(context).loadString('assets/data/quiz_questions.json');
       final Map<String, dynamic> data = json.decode(jsonString);
-      final languageProvider = Provider.of<LanguageProvider>(context, listen: false);
-      final language = languageProvider.currentLocale.languageCode == 'tr' ? 'Turkish' : 'English';
       
       List<Map<String, dynamic>> loadedQuestions = [];
       
       if (widget.category == 'mixed') {
-        data[language]['categories'].forEach((key, value) {
+        data['Turkish']['categories'].forEach((key, value) {
           if (value['questions'] != null) {
             loadedQuestions.addAll(List<Map<String, dynamic>>.from(value['questions']));
           }
         });
       } else {
-        final categoryQuestions = data[language]['categories'][widget.category]['questions'];
+        final categoryQuestions = data['Turkish']['categories'][widget.category]['questions'];
         if (categoryQuestions != null) {
           loadedQuestions = List<Map<String, dynamic>>.from(categoryQuestions);
         }
       }
 
       if (loadedQuestions.isEmpty) {
-        throw Exception('No questions found for this category');
+        throw Exception('Bu kategori için soru bulunamadı');
       }
 
       loadedQuestions.shuffle();
@@ -71,9 +66,8 @@ class _QuizScreenState extends State<QuizScreen> {
         hasError = true;
       });
       if (mounted) {
-        final l10n = AppLocalizations.of(context)!;
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.link_error)),
+          const SnackBar(content: Text('Sorular yüklenirken bir hata oluştu')),
         );
       }
     }
@@ -126,8 +120,6 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    
     if (isLoading) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
@@ -137,19 +129,19 @@ class _QuizScreenState extends State<QuizScreen> {
     if (hasError || questions.isEmpty) {
       return Scaffold(
         appBar: AppBar(
-          title: Text(l10n.quiz),
+          title: const Text('Hata'),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(l10n.link_error),
+              const Text('Sorular yüklenemedi. Lütfen tekrar deneyin.'),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text(l10n.previous),
+                child: const Text('Geri Dön'),
               ),
             ],
           ),
@@ -161,7 +153,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${l10n.quiz} ${currentQuestionIndex + 1}/10'),
+        title: Text('Soru ${currentQuestionIndex + 1}/10'),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(4.0),
           child: LinearProgressIndicator(
@@ -211,34 +203,48 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
               ),
             ),
-            if (isCorrect != null) ...[
+            if (showExplanation && !isCorrect!) ...[
               const SizedBox(height: 24),
-              Text(
-                isCorrect! ? l10n.correct : l10n.wrong,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: isCorrect! ? Colors.green : Colors.red,
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.red.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.red.withOpacity(0.3)),
                 ),
-                textAlign: TextAlign.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Açıklama:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      question['explanation'],
+                      style: const TextStyle(
+                        color: Colors.red,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              if (showExplanation && question['explanation'] != null) ...[
-                const SizedBox(height: 16),
-                Text(
-                  question['explanation'],
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ],
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: _nextQuestion,
-                child: Text(
-                  currentQuestionIndex < questions.length - 1
-                      ? l10n.next
-                      : l10n.finish,
+                onPressed: isCorrect != null ? _nextQuestion : null,
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(50),
+                  backgroundColor: Colors.blue,
+                ),
+                child: const Text(
+                  'Sonraki Soru',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ],
@@ -247,4 +253,4 @@ class _QuizScreenState extends State<QuizScreen> {
       ),
     );
   }
-}
+} 

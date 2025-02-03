@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:iknowmyrights/theme/app_theme.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuizResultScreen extends StatelessWidget {
   final List<Map<String, dynamic>> questions;
@@ -14,7 +13,6 @@ class QuizResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     int correctAnswers = 0;
     for (int i = 0; i < questions.length; i++) {
       if (userAnswers[i] == questions[i]['correctAnswer']) {
@@ -24,7 +22,7 @@ class QuizResultScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.score),
+        title: const Text('Quiz Sonuçları'),
         automaticallyImplyLeading: false,
       ),
       body: Column(
@@ -45,7 +43,7 @@ class QuizResultScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  l10n.correct,
+                  'Doğru Cevap',
                   style: TextStyle(
                     fontSize: 16,
                     color: AppTheme.textColor.withOpacity(0.8),
@@ -56,16 +54,14 @@ class QuizResultScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _buildResultStat(
-                      context,
                       correctAnswers,
-                      l10n.correct,
+                      'Doğru',
                       Colors.green,
                     ),
                     const SizedBox(width: 24),
                     _buildResultStat(
-                      context,
                       questions.length - correctAnswers,
-                      l10n.wrong,
+                      'Yanlış',
                       Colors.red,
                     ),
                   ],
@@ -118,7 +114,7 @@ class QuizResultScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          '${l10n.quiz}: ${question['options'][userAnswers[index]]}',
+                          'Sizin cevabınız: ${question['options'][userAnswers[index]]}',
                           style: TextStyle(
                             color: isCorrect ? Colors.green : Colors.red,
                             fontWeight: FontWeight.bold,
@@ -127,7 +123,7 @@ class QuizResultScreen extends StatelessWidget {
                         if (!isCorrect) ...[
                           const SizedBox(height: 8),
                           Text(
-                            '${l10n.correct}: ${question['options'][question['correctAnswer']]}',
+                            'Doğru cevap: ${question['options'][question['correctAnswer']]}',
                             style: const TextStyle(
                               color: Colors.green,
                               fontWeight: FontWeight.bold,
@@ -136,7 +132,7 @@ class QuizResultScreen extends StatelessWidget {
                         ],
                         const SizedBox(height: 8),
                         Text(
-                          question['explanation'],
+                          'Açıklama: ${question['explanation']}',
                           style: const TextStyle(
                             fontStyle: FontStyle.italic,
                           ),
@@ -155,7 +151,7 @@ class QuizResultScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
               ),
-              child: Text(l10n.home),
+              child: const Text('Ana Menüye Dön'),
             ),
           ),
         ],
@@ -163,7 +159,7 @@ class QuizResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildResultStat(BuildContext context, int count, String label, Color color) {
+  Widget _buildResultStat(int count, String label, Color color) {
     return Column(
       children: [
         Text(
@@ -183,4 +179,4 @@ class QuizResultScreen extends StatelessWidget {
       ],
     );
   }
-}
+} 
