@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:iknowmyrights/theme/app_theme.dart';
 import 'package:iknowmyrights/screens/quiz/quiz_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuizCategoryScreen extends StatelessWidget {
   const QuizCategoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hak Bilgisi Yarışması'),
+        title: Text(l10n.quizTitle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              'Kategori Seçin',
-              style: TextStyle(
+            Text(
+              l10n.selectCategory,
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: AppTheme.primaryColor,
@@ -34,13 +37,13 @@ class QuizCategoryScreen extends StatelessWidget {
                 children: [
                   _buildAnimatedCategoryCard(
                     context,
-                    'Engelli Hakları',
+                    l10n.disabilityRights,
                     Icons.accessible,
                     'disability',
                   ),
                   _buildAnimatedCategoryCard(
                     context,
-                    'Kadın Hakları',
+                    l10n.womenRights,
                     Icons.female,
                     'women',
                   ),

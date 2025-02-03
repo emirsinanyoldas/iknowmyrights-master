@@ -1,93 +1,98 @@
 import 'package:flutter/material.dart';
 import 'package:iknowmyrights/theme/app_theme.dart';
-import 'package:iknowmyrights/screens/developer_detail_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class AboutScreen extends StatelessWidget {
-  const AboutScreen({super.key});
+class DeveloperCard extends StatefulWidget {
+  final String name;
+  final String role;
+  final String imageUrl;
+  final String githubUrl;
+  final String linkedinUrl;
+
+  const DeveloperCard({
+    super.key,
+    required this.name,
+    required this.role,
+    required this.imageUrl,
+    required this.githubUrl,
+    required this.linkedinUrl,
+  });
+
+  @override
+  State<DeveloperCard> createState() => _DeveloperCardState();
+}
+
+class _DeveloperCardState extends State<DeveloperCard> {
+  bool isHovered = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Hakkında'),
-      ),
-      body: SingleChildScrollView(
+    return MouseRegion(
+      onEnter: (_) => setState(() => isHovered = true),
+      onExit: (_) => setState(() => isHovered = false),
+      child: Container(
+        width: MediaQuery.of(context).size.width / 2 - 24,
         padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isHovered ? Colors.grey.withOpacity(0.1) : Colors.transparent,
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const Card(
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Uygulama Hakkında',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.primaryColor,
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    Text(
-                      'Bu uygulama, temel insan haklarını herkes için erişilebilir ve anlaşılır kılmayı amaçlamaktadır. Engelli hakları, kadın hakları, yaşlı hakları ve çocuk hakları gibi özel alanlarda bilgilendirme yaparak toplumsal farkındalığı artırmayı hedeflemekteyiz.\n\n'
-                      'Projemiz, haklar konusunda farkındalık yaratmak ve bu hakların kullanımını kolaylaştırmak için tasarlanmıştır. Kullanıcı dostu arayüzü ve kapsamlı içeriği ile herkesin haklarını öğrenmesini ve korumasını destekliyoruz.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        height: 1.5,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            CircleAvatar(
+              radius: 40,
+              backgroundImage: AssetImage(widget.imageUrl),
             ),
-            const SizedBox(height: 24),
-            const Text(
-              'Geliştirici Ekibi',
-              style: TextStyle(
-                fontSize: 20,
+            const SizedBox(height: 12),
+            Text(
+              widget.name,
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: AppTheme.primaryColor,
+                fontSize: 16,
               ),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
-            GridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              mainAxisSpacing: 16,
-              crossAxisSpacing: 16,
-              childAspectRatio: 0.85,
+            const SizedBox(height: 4),
+            Text(
+              widget.role,
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 14,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildDeveloperCard(
-                  context,
-                  name: 'Geliştirici 1',
-                  role: 'Takım Lideri',
-                  imageUrl: 'assets/images/developer1.jpg',
-                  githubUrl: 'github_username1',
+                IconButton(
+                  icon: const Icon(Icons.code),
+                  onPressed: () async {
+                    if (!await launchUrl(Uri.parse(widget.githubUrl))) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('GitHub profili açılamadı')),
+                        );
+                      }
+                    }
+                  },
+                  tooltip: 'GitHub',
                 ),
-                _buildDeveloperCard(
-                  context,
-                  name: 'Geliştirici 2',
-                  role: 'UI/UX Tasarımcısı',
-                  imageUrl: 'assets/images/developer2.jpg',
-                  githubUrl: 'github_username2',
-                ),
-                _buildDeveloperCard(
-                  context,
-                  name: 'Geliştirici 3',
-                  role: 'Backend Geliştirici',
-                  imageUrl: 'assets/images/developer3.jpg',
-                  githubUrl: 'github_username3',
-                ),
-                _buildDeveloperCard(
-                  context,
-                  name: 'Geliştirici 4',
-                  role: 'Frontend Geliştirici',
-                  imageUrl: 'assets/images/developer4.jpg',
-                  githubUrl: 'github_username4',
+                const SizedBox(width: 16),
+                IconButton(
+                  icon: const Icon(Icons.work),
+                  onPressed: () async {
+                    if (!await launchUrl(Uri.parse(widget.linkedinUrl))) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('LinkedIn profili açılamadı')),
+                        );
+                      }
+                    }
+                  },
+                  tooltip: 'LinkedIn',
                 ),
               ],
             ),
@@ -96,73 +101,96 @@ class AboutScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildDeveloperCard(
-    BuildContext context, {
-    required String name,
-    required String role,
-    required String imageUrl,
-    required String githubUrl,
-  }) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+class AboutScreen extends StatelessWidget {
+  const AboutScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(l10n.aboutTitle),
       ),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DeveloperDetailScreen(
-                name: name,
-                role: role,
-                imageUrl: imageUrl,
-                githubUrl: githubUrl,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.aboutAppTitle,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.primaryColor,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      l10n.aboutAppDescription,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          );
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                AppTheme.primaryColor.withOpacity(0.1),
-                AppTheme.secondaryColor.withOpacity(0.1),
+            const SizedBox(height: 20),
+            Text(
+              l10n.developersTitle,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.primaryColor,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 16,
+              runSpacing: 16,
+              alignment: WrapAlignment.center,
+              children: const [
+                DeveloperCard(
+                  name: 'Alperen Mimaroğlu',
+                  role: 'Fullstack Developer',
+                  imageUrl: 'assets/images/developer1.jpg',
+                  githubUrl: 'https://github.com/alperenmimaroglu',
+                  linkedinUrl: 'https://www.linkedin.com/in/alperenmimaroglu/',
+                ),
+                DeveloperCard(
+                  name: 'Emir Sinan Yolbaş',
+                  role: 'Frontend Developer',
+                  imageUrl: 'assets/images/developer2.jpg',
+                  githubUrl: 'https://github.com/emirsinanyolbas',
+                  linkedinUrl: 'https://www.linkedin.com/in/emirsinanyolbas/',
+                ),
+                DeveloperCard(
+                  name: 'Eren Ali Koca',
+                  role: 'Frontend Developer',
+                  imageUrl: 'assets/images/developer3.jpg',
+                  githubUrl: 'https://github.com/erenali',
+                  linkedinUrl: 'https://www.linkedin.com/in/erenali/',
+                ),
+                DeveloperCard(
+                  name: 'Sidal Gündüz',
+                  role: 'Frontend Developer',
+                  imageUrl: 'assets/images/developer4.jpg',
+                  githubUrl: 'https://github.com/sidalgunduz',
+                  linkedinUrl: 'https://www.linkedin.com/in/sidalgunduz/',
+                ),
               ],
             ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                radius: 40,
-                backgroundImage: AssetImage(imageUrl),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                name,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.textColor,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                role,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: AppTheme.textColor.withOpacity(0.8),
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+          ],
         ),
       ),
     );

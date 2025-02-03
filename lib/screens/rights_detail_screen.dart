@@ -21,7 +21,7 @@ class _RightsDetailScreenState extends State<RightsDetailScreen> {
   List<dynamic> subtopics = [];
   bool isLoading = true;
   Set<int> expandedItems = {};
-  Set<int> hoveredItems = {}; // Fare üzerine gelinen öğeleri tutan Set
+  Set<int> hoveredItems = {};
 
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
@@ -64,14 +64,23 @@ class _RightsDetailScreenState extends State<RightsDetailScreen> {
       final String jsonString = await DefaultAssetBundle.of(context).loadString(jsonPath);
       final Map<String, dynamic> data = json.decode(jsonString);
 
+      if (data['Turkish'] == null || data['Turkish']['subtopics'] == null) {
+        throw Exception('Geçersiz JSON formatı');
+      }
+
       setState(() {
-        subtopics = data['Turkish']['subtopics'];
+        subtopics = List<Map<String, dynamic>>.from(data['Turkish']['subtopics']);
         isLoading = false;
       });
     } catch (e) {
       setState(() {
         isLoading = false;
       });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('İçerik yüklenirken bir hata oluştu')),
+        );
+      }
       debugPrint('Error loading JSON: $e');
     }
   }
@@ -84,119 +93,85 @@ class _RightsDetailScreenState extends State<RightsDetailScreen> {
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: subtopics.length,
-        itemBuilder: (context, index) {
-          final subtopic = subtopics[index];
-          final bool isExpanded = expandedItems.contains(index);
-          final bool isHovered = hoveredItems.contains(index); // Hovered durumu
+          : SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: ListView.builder(
+                  itemCount: subtopics.length,
+                  itemBuilder: (context, index) {
+                    final subtopic = subtopics[index];
+                    final bool isExpanded = expandedItems.contains(index);
+                    final bool isHovered = hoveredItems.contains(index);
 
-          return Card(
-            margin: const EdgeInsets.only(bottom: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            elevation: 2,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        if (isExpanded) {
-                          expandedItems.remove(index);
-                        } else {
-                          expandedItems.add(index);
-                        }
-                      });
-                    },
-                    child: MouseRegion(
-                      onEnter: (_) {
-                        setState(() {
-                          hoveredItems.add(index); // Fare üzerindeyken yazıyı küçült
-                        });
-                      },
-                      onExit: (_) {
-                        setState(() {
-                          hoveredItems.remove(index); // Fare ayrıldığında yazıyı eski haline getir
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              AppTheme.primaryColor.withOpacity(0.1),
-                              AppTheme.secondaryColor.withOpacity(0.1),
-                            ],
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                subtopic['subheading'] ?? subtopic['title'] ?? '',
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: MouseRegion(
+                        onEnter: (_) {
+                          setState(() {
+                            hoveredItems.add(index);
+                          });
+                        },
+                        onExit: (_) {
+                          setState(() {
+                            hoveredItems.remove(index);
+                          });
+                        },
+                        child: Card(
+                          elevation: isHovered ? 4 : 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Theme.of(context).cardColor,
+                            ),
+                            child: ExpansionTile(
+                              title: AnimatedDefaultTextStyle(
+                                duration: const Duration(milliseconds: 300),
                                 style: TextStyle(
-                                  fontSize: isHovered ? 12.6 : 18, // %30 küçülme
+                                  fontSize: isHovered ? 15 : 16,
                                   fontWeight: FontWeight.bold,
-                                  color: AppTheme.primaryColor,
+                                  color: AppTheme.textColor,
+                                ),
+                                child: Text(
+                                  subtopic['title'] ?? subtopic['subheading'] ?? 'Başlık bulunamadı',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                            ),
-                            Icon(
-                              isExpanded
-                                  ? Icons.keyboard_arrow_up
-                                  : Icons.keyboard_arrow_down,
-                              color: AppTheme.primaryColor,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  if (isExpanded) ...[
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            subtopic['text'] ?? '',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: AppTheme.textColor.withOpacity(0.8),
-                              height: 1.5,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      if (subtopic['text'] != null)
+                                        Text(
+                                          subtopic['text'],
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            height: 1.5,
+                                          ),
+                                        ),
+                                      if (subtopic['url'] != null) ...[
+                                        const SizedBox(height: 16),
+                                        ElevatedButton.icon(
+                                          onPressed: () => _launchURL(subtopic['url']),
+                                          icon: const Icon(Icons.link),
+                                          label: const Text('Daha fazla bilgi'),
+                                        ),
+                                      ],
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          if (subtopic['url'] != null) ...[
-                            const SizedBox(height: 16),
-                            ElevatedButton.icon(
-                              onPressed: () => _launchURL(subtopic['url']),
-                              icon: const Icon(Icons.link),
-                              label: const Text('Daha fazla bilgi için tıklayın'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppTheme.secondaryColor,
-                                foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
-                ],
+                    );
+                  },
+                ),
               ),
             ),
-          );
-        },
-      ),
     );
   }
 }

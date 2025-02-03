@@ -87,12 +87,13 @@
       "title": "Engelli Hakları",
       "subtopics": [
         {
-          "subheading": "Sağlık Hizmetlerine Erişim",
-          "text": "Engelli bireyler, ihtiyaçlarına uygun sağlık hizmetlerine erişim hakkına sahiptir."
+          "title": "Sağlık Hizmetlerine Erişim",
+          "text": "Engelli bireyler, ihtiyaçlarına uygun sağlık hizmetlerine erişim hakkına sahiptir.",
+          "url": "https://example.com/saglik-hizmetleri"
         },
         {
-          "subheading": "Engelli Sağlık Hizmetlerine Erişim Hakkının Toplumdaki Yeri",
-          "text": "Engelli bireylerin sağlık hizmetlerine erişim hakkı, Birleşmiş Milletler Engelli Hakları Sözleşmesi'nde güvence altına alınmıştır. Bu sözleşme, engelli bireylerin sağlık hizmetlerine erişimini teşvik ve temin etmeyi amaçlamaktadır. Türkiye'de, engelli bireylerin sağlık hizmetlerine erişimini kolaylaştırmak amacıyla çeşitli düzenlemeler yapılmıştır. Örneğin, engelli bireylerin sağlık kurulu raporu alarak engelli aylığı, evde bakım yardımı ve özel eğitim gibi hizmetlerden yararlanmaları mümkündür. Ayrıca, engelli bireylerin sağlık hizmetlerine erişiminde fiziki erişilebilirlik, bilgiye erişim ve teknolojik erişim gibi unsurlar da büyük önem taşır. Bu nedenle, sağlık hizmetlerinin engelli bireylerin ihtiyaçlarına uygun hale getirilmesi için çeşitli tedbirler alınmaktadır. Engelli bireylerin sağlık hizmetlerine erişim hakkı, onların bağımsızlıklarını korumalarına ve topluma aktif bir şekilde katılmalarına yardımcı olur. Bu nedenle, toplumun her kesiminin bu hakların korunması ve geliştirilmesi konusunda duyarlı olması büyük önem taşır.",
+          "subheading": "The Role of Disabled Health Services Access in Society",
+          "text": "The right of disabled individuals to access health services is guaranteed under the United Nations Convention on the Rights of Persons with Disabilities. This convention aims to promote and ensure access to health services for disabled individuals. In Turkey, various regulations have been made to facilitate access to health services for disabled individuals. For example, disabled individuals can benefit from services such as disability pensions, home care assistance, and special education by obtaining a health committee report. Additionally, physical accessibility, access to information, and technological access are crucial factors in ensuring disabled individuals can access health services. Therefore, measures are being taken to make health services more suitable for the needs of disabled individuals. The right to access health services helps disabled individuals maintain their independence and actively participate in society. For this reason, it is of great importance that all sectors of society are sensitive to the protection and development of these rights.",
           "url": "https://www.aile.gov.tr/sss/engelli-ve-yasli-hizmetleri-genel-mudurlugu/engellilerin-haklarina-iliskin-sozlesme/?utm_source"
         },
   
@@ -107,12 +108,13 @@
         },
   
         {
-          "subheading": "Eğitim ve İstihdam Fırsatları",
-          "text": "Engelli bireyler, eğitim ve istihdamda eşit fırsatlara sahip olma hakkına sahiptir."
+          "title": "Eğitim ve İstihdam Fırsatları",
+          "text": "Engelli bireyler, eğitim ve istihdamda eşit fırsatlara sahip olma hakkına sahiptir.",
+          "url": "https://example.com/egitim-istihdam"
         },
         {
           "subheading": "Engelli Eğitim ve İstihdam Fırsatları Hakkının Toplumdaki Yeri",
-          "text": "Engelli bireylerin eğitim ve istihdam fırsatlarına erişimi, onların toplumsal hayata katılımını sağlamak için büyük önem taşır. Türkiye’de engelli bireyler, Anayasa ve 5378 sayılı Engelliler Hakkında Kanun ile eğitim haklarına sahipken, kamu ve özel sektörde engelli istihdamı belirli oranlarda zorunlu hale getirilmiştir. Ayrıca, mesleki rehabilitasyon ve destekler, engelli bireylerin iş gücü piyasasına entegrasyonunu kolaylaştırır. Bu fırsatlar, engelli bireylerin bağımsız yaşamlarını sürdürebilmeleri ve toplumsal katkılarını artırmaları için kritik bir rol oynar.",
+          "text": "Engelli bireylerin eğitim ve istihdam fırsatlarına erişimi, onların toplumsal hayata katılımını sağlamak için büyük önem taşır. Türkiye'de engelli bireyler, Anayasa ve 5378 sayılı Engelliler Hakkında Kanun ile eğitim haklarına sahipken, kamu ve özel sektörde engelli istihdamı belirli oranlarda zorunlu hale getirilmiştir. Ayrıca, mesleki rehabilitasyon ve destekler, engelli bireylerin iş gücü piyasasına entegrasyonunu kolaylaştırır. Bu fırsatlar, engelli bireylerin bağımsız yaşamlarını sürdürebilmeleri ve toplumsal katkılarını artırmaları için kritik bir rol oynar.",
           "url": "https://engelsizkariyer.com/BILGI-BANKASI/Engelli-Haklari/Engellilerin-Kamu-Ve-Ozel-Sektorde-Istihdam-Ve-Mesleki-Rehabilitasyon-Haklari-308?utm_source"
         },
   
