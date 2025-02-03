@@ -7,8 +7,25 @@
     },
     {
       "title": "Kadın Hakları",
-      "text": "Kadın çalışanların doğum sonrası 6 ay yarım çalışma hakkına sahiptir.",
-      "category": "women"
+      "text": "Kadınların eşit haklara sahip olması, toplumsal cinsiyet eşitliği ve kadına yönelik şiddetle mücadele konularındaki temel haklar.",
+      "category": "women",
+      "details": [
+        "Eşit işe eşit ücret hakkı",
+        "Eğitimde fırsat eşitliği",
+        "Siyasi katılım hakkı",
+        "Şiddete karşı korunma hakkı"
+      ]
+    },
+    {
+      "title": "İş Hayatında Kadın Hakları",
+      "text": "Çalışma hayatında kadınların sahip olduğu haklar ve korunma mekanizmaları.",
+      "category": "women",
+      "details": [
+        "Doğum izni hakları",
+        "İş yerinde ayrımcılığa karşı koruma",
+        "Emzirme izni",
+        "Gece çalışma koşulları"
+      ]
     }
     // Diğer içerikler...
   ]
