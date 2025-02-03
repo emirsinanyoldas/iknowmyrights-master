@@ -34,5 +34,13 @@
     "profile_description": "Manage Your Profile",
     "link_error": "Could not open the link",
     "more_info": "Click for more information",
-    "mixed": "Mixed"
+    "mixed": "Mixed",
+    "quizTitle": "Quiz",
+    "selectCategory": "Select Category",
+    "disabilityRights": "Disability Rights",
+    "womenRights": "Women Rights",
+    "aboutTitle": "About",
+    "aboutAppTitle": "About App",
+    "aboutAppDescription": "This app is designed to help citizens learn and understand their rights.",
+    "developersTitle": "Developers"
 }

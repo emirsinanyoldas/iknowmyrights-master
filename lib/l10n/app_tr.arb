@@ -34,5 +34,13 @@
     "profile_description": "Profilini Yönet",
     "link_error": "Link açılamadı",
     "more_info": "Daha fazla bilgi için tıklayın",
-    "mixed": "Karışık"
+    "mixed": "Karışık",
+    "quizTitle": "Test",
+    "selectCategory": "Kategori Seçin",
+    "disabilityRights": "Engelli Hakları",
+    "womenRights": "Kadın Hakları",
+    "aboutTitle": "Hakkında",
+    "aboutAppTitle": "Uygulama Hakkında",
+    "aboutAppDescription": "Bu uygulama, vatandaşların haklarını öğrenmelerine ve anlamalarına yardımcı olmak için tasarlanmıştır.",
+    "developersTitle": "Geliştiriciler"
 }
